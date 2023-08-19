@@ -8,7 +8,6 @@ const ToggleMode = () => {
 
   const [theme, setTheme] = useState('light')
 
-
   useEffect(()=> {
     document.documentElement.className = theme
   },[theme])
