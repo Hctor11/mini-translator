@@ -1,4 +1,4 @@
-![](../translator/public/Header.png)
+![](/Header.png)
 # Mini translator
 Hi! 'mini-translator' is a handy project that I've been working on. It's a small and efficient tool for translating text between different languages. 
 Whether you're trying to understand a foreign article or communicate with someone who speaks another language, 'mini-translator' has got you covered.
@@ -25,4 +25,4 @@ pnpm dev
 Open http://localhost:3000 with your browser to see the result.
 
 ## Tech Stack
-![](../translator/public/TechStack.png)
+![](/TechStack.png)
