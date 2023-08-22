@@ -11,6 +11,7 @@ import axios from "axios";
 const copiedToClipboard = () => toast.success("copied to clipboard!");
 const translating = () => toast.loading("Translating text...");
 const translatedText = () => toast.success("text succesfully translated!");
+const nothingToTranslate = () => toast.error("No text to translate!");
 
 const TranslateForm = () => {
   const [selectedLang, setSelectedLang] = useState("en");
@@ -33,18 +34,23 @@ const TranslateForm = () => {
 
   const translateText = () => {
 
-    translating()
 
     const data = {
       q: inputValue,
       source: selectedLang,
       target: toTranslateLang
     }
-    axios.post(`https://libretranslate.de/translate`, data)
-      .then(res => {
-        setOutputValue(res.data.translatedText)
-        translatedText()
+
+    if(inputValue.length <= 1) {
+      nothingToTranslate()
+    }else{
+      translating()
+      axios.post(`https://libretranslate.de/translate`, data)
+        .then(res => {
+          setOutputValue(res.data.translatedText)
+          translatedText()
       })
+    }  
   }
 
 
