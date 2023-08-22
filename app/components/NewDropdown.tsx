@@ -9,6 +9,8 @@ import toast, { Toaster } from 'react-hot-toast';
 import axios from "axios";
 
 const copiedToClipboard = () => toast.success("copied to clipboard!");
+const translating = () => toast.loading("Translating text...");
+const translatedText = () => toast.success("text succesfully translated!");
 
 const TranslateForm = () => {
   const [selectedLang, setSelectedLang] = useState("en");
@@ -31,6 +33,8 @@ const TranslateForm = () => {
 
   const translateText = () => {
 
+    translating()
+
     const data = {
       q: inputValue,
       source: selectedLang,
@@ -39,6 +43,7 @@ const TranslateForm = () => {
     axios.post(`https://libretranslate.de/translate`, data)
       .then(res => {
         setOutputValue(res.data.translatedText)
+        translatedText()
       })
   }
 
@@ -150,14 +155,6 @@ const TranslateForm = () => {
       >
         Translate
       </Button>
-      <br />
-      <span>LENGUAJE SELECCIONADO: {selectedLang}</span>
-      <br />
-      <span>LENGUAJE SELECCIONADO: {toTranslateLang}</span>
-      <br />
-      <span>Entrada: {inputValue}</span>
-      <br />
-      <span>SALIDA: {outputValue}</span>
     </form>
   );
 };

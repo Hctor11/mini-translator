@@ -5,6 +5,8 @@ nav
     justify-content: space-between
     align-items: center
 
+
+
 .selector-container
     padding: 10px
     font-size: 14px
@@ -57,7 +59,29 @@ nav
     display: flex
     justify-content: space-between
 
+.inverse-icon
+    margin-bottom: 12px
+    filter: invert(1)
+    transition: .4s linear
+
+.icon-image, Image
+    transition: .4s linear
+
+footer
+    margin: 30px
+    flex-direction: column
+    display: flex
+    align-items: center
+    justify-content: center
+
+    .icon-container
+        a
+            margin: 12px
+
 .dark
+    .icon-image, Image
+        filter: invert(1)
+
     .selector-container
         background-color: #1d1d1d
         border-color: #3f3f3f
@@ -73,6 +97,11 @@ nav
         background-color: #3f3f3f
         color: #fff
 
+    .inverse-icon
+        filter: invert(0)
+
 @media (max-width: 768px)
     .arealabel-container
         flex-direction: column
+
+    

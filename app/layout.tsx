@@ -20,6 +20,9 @@ export default function RootLayout({
   return (
     <>
         <html lang="en" id="html" className="light">
+          <head>
+            <title>Mini translator</title>
+          </head>
           <body className={inter.className}>
             <Providers>{children}</Providers>
           </body>
