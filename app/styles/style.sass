@@ -3,6 +3,7 @@ nav
     margin: 30px
     display: flex
     justify-content: space-between
+    align-items: center
 
 .selector-container
     padding: 10px
@@ -38,9 +39,19 @@ nav
     width: 100%
 
 .text-area-controls
+    display: flex
+    justify-content: space-between
+    margin-right: 70px
     margin-top: -55px
-    margin-left: 10px
+    margin-left: 13px
     margin-bottom: 20px
+
+    span
+        filter: opacity(0.4)
+        display: inline-block
+        margin-top: 20px
+        position: absolute
+        z-index: 5
 
 .text-options-container
     display: flex
@@ -58,3 +69,10 @@ nav
         background-color: #1d1d1d
         color: white
 
+    .toast
+        background-color: #3f3f3f
+        color: #fff
+
+@media (max-width: 768px)
+    .arealabel-container
+        flex-direction: column

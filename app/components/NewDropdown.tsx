@@ -5,15 +5,43 @@ import { useState } from "react";
 import { PiArrowsLeftRightBold } from "react-icons/pi";
 import { FiCopy } from "react-icons/fi";
 import { Button } from "@nextui-org/react";
+import toast, { Toaster } from 'react-hot-toast';
+import axios from "axios";
+
+const copiedToClipboard = () => toast.success("copied to clipboard!");
 
 const TranslateForm = () => {
   const [selectedLang, setSelectedLang] = useState("en");
   const [toTranslateLang, setToTranslateLang] = useState("es");
+  const [inputValue, setInputValue] = useState("")
+  const [outputValue, setOutputValue] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+
   const handleChangeButton = () => {
     const oldLang = selectedLang;
     setSelectedLang(toTranslateLang);
     setToTranslateLang(oldLang);
   };
+
+  const handleClipboardClick = (text: string) => {
+    navigator.clipboard.writeText(text);
+    copiedToClipboard();
+  };
+
+
+  const translateText = () => {
+
+    const data = {
+      q: inputValue,
+      source: selectedLang,
+      target: toTranslateLang
+    }
+    axios.post(`https://libretranslate.de/translate`, data)
+      .then(res => {
+        setOutputValue(res.data.translatedText)
+      })
+  }
+
 
   return (
     <form action="" className="form-container">
@@ -21,7 +49,6 @@ const TranslateForm = () => {
         <select
           name="languages"
           id="languages lang"
-          defaultValue="en"
           value={selectedLang}
           className="selector-container"
           onChange={(e) => {
@@ -52,7 +79,6 @@ const TranslateForm = () => {
         <select
           name="languages"
           id="languages totranslate"
-          defaultValue="es"
           value={toTranslateLang}
           className="selector-container"
           onChange={(e) => {
@@ -76,38 +102,51 @@ const TranslateForm = () => {
         <div className="text-area-input">
           <Textarea
             variant="faded"
-            validationState="valid"
             labelPlacement="outside"
             placeholder="Type something..."
+            value={inputValue}
+            onChange={(e) => {setInputValue(e.target.value);}}
             minRows={7}
             maxLength={250}
           />
           <div className="text-area-controls">
-            <Button color="default" isIconOnly className="change-button">
+            <Button color="default" isIconOnly className="change-button" radius="sm" onClick={() => handleClipboardClick(inputValue)}>
               <FiCopy />
             </Button>
+            <div className="word-counter">
+            <span className="text">{inputValue.length}/250</span>
+            </div>
           </div>
         </div>
         <div className="text-area-output">
           <Textarea
             isDisabled
             variant="faded"
+            value={outputValue}
             labelPlacement="outside"
             placeholder="Translation"
             minRows={7}
           />
           <div className="text-area-controls">
-            <Button color="default" isIconOnly className="change-button">
+            <Button color="default" isIconOnly className="change-button" radius="sm"  onClick={() => handleClipboardClick(outputValue)}>
               <FiCopy />
             </Button>
+
           </div>
         </div>
+        <Toaster
+              toastOptions={{
+                className: 'toast',
+                duration: 700,
+              }}
+            /> 
       </div>
 
       <Button
         radius="full"
         color="default"
-        className="w-1/2 border-solid border-1 border-zinc-950 shadow-lg"
+        className="w-full md:w-1/2 shadow-lg"
+        onClick={() => translateText()}
       >
         Translate
       </Button>
@@ -115,6 +154,10 @@ const TranslateForm = () => {
       <span>LENGUAJE SELECCIONADO: {selectedLang}</span>
       <br />
       <span>LENGUAJE SELECCIONADO: {toTranslateLang}</span>
+      <br />
+      <span>Entrada: {inputValue}</span>
+      <br />
+      <span>SALIDA: {outputValue}</span>
     </form>
   );
 };
